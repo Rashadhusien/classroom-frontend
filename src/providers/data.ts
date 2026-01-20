@@ -1,74 +1,51 @@
-// import { createSimpleRestDataProvider } from "@refinedev/rest/simple-rest";
-// import { API_URL } from "./constants";
-// export const { dataProvider, kyInstance } = createSimpleRestDataProvider({
-//   apiURL: API_URL,
-// });
+import { BACKEND_BASE_URL } from "@/constants";
+import { ListResponse } from "@/types";
+import { createDataProvider, CreateDataProviderOptions } from "@refinedev/rest";
 
-import {
-  BaseRecord,
-  DataProvider,
-  GetListParams,
-  GetListResponse,
-} from "@refinedev/core";
+if (!BACKEND_BASE_URL) throw new Error("BACKEND_BASE_URL is not defined");
 
-const MOCK_SUBJECTS = [
-  {
-    id: 1,
-    course: "Computer Science",
-    code: "CS101",
-    name: "Introduction to Computer Science",
-    department: "Engineering",
-    description:
-      "A comprehensive introduction to the fundamentals of computer science, covering algorithms, data structures, and software engineering principles.",
-  },
-  {
-    id: 2,
-    course: "Physics",
-    code: "PHY201",
-    name: "Quantum Mechanics",
-    department: "Science",
-    description:
-      "An advanced course exploring the principles of quantum mechanics, wave-particle duality, and the mathematical framework of quantum theory.",
-  },
-  {
-    id: 3,
-    course: "Mathematics",
-    code: "MATH101",
-    name: "Calculus I",
-    department: "Mathematics",
-    description:
-      "An introductory course on differential and integral calculus, focusing on limits, continuity, and applications of derivatives and integrals.",
-  },
-];
+const options: CreateDataProviderOptions = {
+  getList: {
+    getEndpoint: ({ resource }) => resource,
 
-export const dataProvider: DataProvider = {
-  getList: async <TData extends BaseRecord = BaseRecord>({
-    resource,
-  }: GetListParams): Promise<GetListResponse<TData>> => {
-    if (resource !== "subjects") {
-      return {
-        data: [] as TData[],
-        total: 0,
-      };
-    }
+    buildQueryParams: async ({ resource, pagination, filters }) => {
+      const page = pagination?.currentPage ?? 1;
+      const pageSize = pagination?.pageSize ?? 10;
 
-    return {
-      data: MOCK_SUBJECTS as unknown as TData[],
-      total: MOCK_SUBJECTS.length,
-    };
-  },
-  getOne: async () => {
-    throw new Error("this functin is not present in mock");
-  },
-  create: async () => {
-    throw new Error("this functin is not present in mock");
-  },
-  update: async () => {
-    throw new Error("this functin is not present in mock");
-  },
-  deleteOne: async () => {
-    throw new Error("this functin is not present in mock");
-  },
+      const params: Record<string, string | number> = { page, limit: pageSize };
 
-  getApiUrl: () => "",
+      filters?.forEach((filter) => {
+        const field = "field" in filter ? filter.field : "";
+        const value = String(filter.value);
+
+        if (resource === "subjects") {
+          if (field === "department") params.department = value;
+          if (field === "name" || field === "code") params.search = value;
+        }
+      });
+
+      return params;
+    },
+
+    mapResponse: async (Response) => {
+      const payload: ListResponse = await Response.clone().json();
+
+      return payload.data ?? payload.subjects ?? [];
+    },
+
+    getTotalCount: async (Response) => {
+      const payload: ListResponse = await Response.clone().json();
+
+      return (
+        payload.pagination?.total ??
+        payload.data?.length ??
+        payload.subjects?.length ??
+        0
+      );
+    },
+  },
 };
+
+const { dataProvider } = createDataProvider(BACKEND_BASE_URL, options);
+
+export { dataProvider };
