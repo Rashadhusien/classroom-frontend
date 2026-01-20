@@ -2,6 +2,8 @@ import { BACKEND_BASE_URL } from "@/constants";
 import { ListResponse } from "@/types";
 import { createDataProvider, CreateDataProviderOptions } from "@refinedev/rest";
 
+if (!BACKEND_BASE_URL) throw new Error("BACKEND_BASE_URL is not defined");
+
 const options: CreateDataProviderOptions = {
   getList: {
     getEndpoint: ({ resource }) => resource,
@@ -26,13 +28,13 @@ const options: CreateDataProviderOptions = {
     },
 
     mapResponse: async (Response) => {
-      const payload: ListResponse = await Response.json();
+      const payload: ListResponse = await Response.clone().json();
 
       return payload.data ?? payload.subjects ?? [];
     },
 
     getTotalCount: async (Response) => {
-      const payload: ListResponse = await Response.json();
+      const payload: ListResponse = await Response.clone().json();
 
       return (
         payload.pagination?.total ??
