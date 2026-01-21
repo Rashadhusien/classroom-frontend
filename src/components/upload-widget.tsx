@@ -9,7 +9,17 @@ import { CloudinaryWidget } from "cloudinary-react";
 import { UploadCloud } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const UploadWidget = ({ value = null, onChange, disabled }) => {
+interface UploadWidgetProps {
+  value?: UploadWidgetValue | null;
+  onChange?: (value: UploadWidgetValue) => void;
+  disabled?: boolean;
+}
+
+const UploadWidget = ({
+  value = null,
+  onChange,
+  disabled,
+}: UploadWidgetProps) => {
   const widgetRef = useRef<CloudinaryWidget | null>(null);
   const onChangeRef = useRef(onChange);
   const [preview, setPreview] = useState<UploadWidgetValue | null>(value);
@@ -33,8 +43,8 @@ const UploadWidget = ({ value = null, onChange, disabled }) => {
           uploadPreset: CLOUDINARY_UPLOAD_PRESET,
           multiple: false,
           folder: "classroom",
-          maxfileSize: MAX_FILE_SIZE,
-          clientAllowedFormats: ALLOWED_TYPES,
+          maxFileSize: MAX_FILE_SIZE,
+          clientAllowedFormats: ["png", "jpg", "jpeg", "webp"],
         },
         (error, result) => {
           if (!error && result.event === "success") {
@@ -86,7 +96,7 @@ const UploadWidget = ({ value = null, onChange, disabled }) => {
           <div className="upload-prompt">
             <UploadCloud className="icon" />
             <p>Click to upload photo</p>
-            <p>PNG, JPG up to 5MB</p>
+            <p>PNG, JPG, WebP up to 3MB</p>
           </div>
         </div>
       )}
