@@ -198,7 +198,7 @@ export function DataTable<TData extends BaseRecord>({
           </TableBody>
         </Table>
       </div>
-      {!isLoading && getRowModel().rows?.length > 0 && (
+      {!isLoading && getRowModel().rows?.length > 9 && (
         <DataTablePagination
           currentPage={currentPage}
           pageCount={pageCount}
@@ -235,7 +235,7 @@ function DataTableNoData({
             "items-center",
             "justify-center",
             "gap-2",
-            "bg-background",
+            "bg-transparent",
           )}
           style={{
             position: isOverflowing.horizontal ? "sticky" : "absolute",

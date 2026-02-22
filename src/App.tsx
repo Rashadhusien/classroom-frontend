@@ -24,6 +24,8 @@ import ClassesCreate from "./pages/classes/Create";
 import ClassesShow from "./pages/classes/show";
 import DepartmentsList from "./pages/departments/List";
 
+import SubjectsShow from "./pages/subjects/show";
+
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 
@@ -53,6 +55,7 @@ function App() {
                   name: "subjects",
                   list: "/subjects",
                   create: "/subjects/create",
+                  show: "/subjects/show/:id",
                   meta: { label: "Subjects", icon: <BookOpen /> },
                 },
                 {
@@ -93,6 +96,7 @@ function App() {
                   <Route path="/subjects">
                     <Route index element={<SubjectsList />} />
                     <Route path="create" element={<SubjectsCreate />} />
+                    <Route path="show/:id" element={<SubjectsShow />} />
                   </Route>
                   <Route path="/classes">
                     <Route index element={<ClassesList />} />
