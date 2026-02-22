@@ -29,6 +29,7 @@ import SubjectsShow from "./pages/subjects/show";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import DepartmentsCreate from "./pages/departments/create";
+import DepartmentsShow from "./pages/departments/show";
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
                   name: "departments",
                   list: "/departments",
                   create: "/departments/create",
+                  show: "/departments/show/:id",
                   meta: { label: "Departments" },
                 },
               ]}
@@ -108,6 +110,7 @@ function App() {
                   <Route path="/departments">
                     <Route index element={<DepartmentsList />} />
                     <Route path="create" element={<DepartmentsCreate />} />
+                    <Route path="show/:id" element={<DepartmentsShow />} />
                   </Route>
                 </Route>
               </Routes>
