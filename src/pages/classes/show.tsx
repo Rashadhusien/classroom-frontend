@@ -66,7 +66,7 @@ const Show = () => {
         {bannerUrl ? (
           <AdvancedImage
             alt="class banner"
-            cldImg={bannerPhoto(bannerCldPubId ?? "", name)}
+            cldImg={bannerPhoto(bannerCldPubId ?? "classroom/no-image", name)}
           />
         ) : (
           <div className="placeholder"></div>
