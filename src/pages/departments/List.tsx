@@ -5,6 +5,7 @@ import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
 import { ListView } from "@/components/refine-ui/views/list-view";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { useGetIdentity } from "@refinedev/core";
 
 import { useTable } from "@refinedev/react-table";
 import { ColumnDef } from "@tanstack/react-table";
@@ -21,6 +22,7 @@ type DepartmentListItem = {
 
 const DepartmentsList = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const { data: currentUser } = useGetIdentity<{ role: string }>();
 
   const departmentColumns = useMemo<ColumnDef<DepartmentListItem>[]>(
     () => [
@@ -142,7 +144,7 @@ const DepartmentsList = () => {
             />
           </div>
           <div className="flex gap-2 w-full sm:w-auto">
-            <CreateButton />
+            {currentUser?.role !== "student" && <CreateButton />}
           </div>
         </div>
       </div>

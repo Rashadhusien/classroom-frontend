@@ -10,7 +10,7 @@ import {
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { User } from "@/types";
-import { useGetIdentity, useLogout, useRefineOptions } from "@refinedev/core";
+import { useGetIdentity, useLogout } from "@refinedev/core";
 import { LogOutIcon } from "lucide-react";
 
 export const Header = () => {
@@ -46,8 +46,6 @@ function DesktopHeader() {
 
 function MobileHeader() {
   const { open, isMobile } = useSidebar();
-
-  const { title } = useRefineOptions();
 
   return (
     <header
@@ -93,24 +91,14 @@ function MobileHeader() {
           },
         )}
       >
-        <div>{title.icon}</div>
-        <h2
-          className={cn(
-            "text-sm",
-            "font-bold",
-            "transition-opacity",
-            "duration-200",
-            {
-              "opacity-0": !open,
-              "opacity-100": open,
-            },
-          )}
-        >
-          {title.text}
-        </h2>
+        <div>
+          <img src="/logo.png" alt="Classroom Logo" className="h-6 w-6" />
+        </div>
       </div>
-
-      <ThemeToggle className={cn("h-8", "w-8")} />
+      <div className="flex items-center gap-2">
+        <ThemeToggle className={cn("h-8", "w-8")} />
+        <UserDropdown />
+      </div>
     </header>
   );
 }
