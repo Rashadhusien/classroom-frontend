@@ -18,8 +18,8 @@ import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 
-import { Subject } from "@/types";
-import { DEPARTMENT_OPTIONS } from "@/constants";
+import { Department, Subject } from "@/types";
+import { useList } from "@refinedev/core";
 
 const SubjectListPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -125,6 +125,13 @@ const SubjectListPage = () => {
     },
   });
 
+  const { query: departmentsQuery } = useList<Department>({
+    resource: "departments",
+    pagination: { pageSize: 100 },
+  });
+
+  const departments = departmentsQuery.data?.data || [];
+
   return (
     <ListView>
       <Breadcrumb />
@@ -156,9 +163,12 @@ const SubjectListPage = () => {
 
               <SelectContent>
                 <SelectItem value="all">All Departments</SelectItem>
-                {DEPARTMENT_OPTIONS.map((department) => (
-                  <SelectItem key={department.value} value={department.value}>
-                    {department.label}
+                {departments?.map((department) => (
+                  <SelectItem
+                    key={department.id}
+                    value={department.id.toString()}
+                  >
+                    {department.name}
                   </SelectItem>
                 ))}
               </SelectContent>
