@@ -16,13 +16,15 @@ import { useTable } from "@refinedev/react-table";
 import { ClassDetails, Subject, User } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge.tsx";
-import { useList } from "@refinedev/core";
+import { useList, useGetIdentity } from "@refinedev/core";
 import { ShowButton } from "@/components/refine-ui/buttons/show.tsx";
 
 const ClassesList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("all");
   const [selectedTeacher, setSelectedTeacher] = useState("all");
+
+  const { data: currentUser } = useGetIdentity<{ role: string }>();
 
   const { query: subjectsQuery } = useList<Subject>({
     resource: "subjects",
@@ -205,7 +207,9 @@ const ClassesList = () => {
               </SelectContent>
             </Select>
 
-            <CreateButton resource="classes" />
+            {currentUser?.role !== "student" && (
+              <CreateButton resource="classes" />
+            )}
           </div>
         </div>
       </div>
