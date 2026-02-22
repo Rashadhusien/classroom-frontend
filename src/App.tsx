@@ -15,7 +15,14 @@ import { ThemeProvider } from "./components/refine-ui/theme/theme-provider";
 import { dataProvider } from "./providers/data";
 import { authProvider } from "./providers/auth";
 import Dashboard from "./pages/Dashboard";
-import { BookOpen, Building2, GraduationCap, Home, Users } from "lucide-react";
+import {
+  BookOpen,
+  Building2,
+  ClipboardCheck,
+  GraduationCap,
+  Home,
+  Users,
+} from "lucide-react";
 import { Layout } from "./components/refine-ui/layout/layout";
 import SubjectsList from "./pages/subjects/List";
 import SubjectsCreate from "./pages/subjects/Create";
@@ -32,6 +39,9 @@ import DepartmentsCreate from "./pages/departments/create";
 import DepartmentsShow from "./pages/departments/show";
 import FacultyList from "./pages/faculty/List";
 import FacultyShow from "./pages/faculty/Show";
+import EnrollmentsCreate from "./pages/enrollments/create";
+import EnrollmentsConfirm from "./pages/enrollments/confirm";
+import EnrollmentsJoin from "./pages/enrollments/join";
 
 function App() {
   return (
@@ -85,6 +95,15 @@ function App() {
                     icon: <Users />,
                   },
                 },
+                {
+                  name: "enrollments",
+                  list: "/enrollments/create",
+                  create: "/enrollments/create",
+                  meta: {
+                    label: "Enrollments",
+                    icon: <ClipboardCheck />,
+                  },
+                },
               ]}
             >
               <Routes>
@@ -126,6 +145,11 @@ function App() {
                   <Route path="/faculty">
                     <Route index element={<FacultyList />} />
                     <Route path="show/:id" element={<FacultyShow />} />
+                  </Route>
+                  <Route path="/enrollments">
+                    <Route path="join" element={<EnrollmentsJoin />} />
+                    <Route path="create" element={<EnrollmentsCreate />} />
+                    <Route path="confirm" element={<EnrollmentsConfirm />} />
                   </Route>
                 </Route>
               </Routes>
