@@ -1,9 +1,10 @@
-import { Refine } from "@refinedev/core";
+import { Authenticated, Refine } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
 import routerProvider, {
   DocumentTitleHandler,
+  NavigateToResource,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
@@ -20,6 +21,9 @@ import SubjectsCreate from "./pages/subjects/Create";
 import ClassesList from "./pages/classes/List";
 import ClassesCreate from "./pages/classes/Create";
 import ClassesShow from "./pages/classes/show";
+
+import { Login } from "./pages/login";
+import { Register } from "./pages/register";
 
 function App() {
   return (
@@ -60,9 +64,21 @@ function App() {
               <Routes>
                 <Route
                   element={
-                    <Layout>
-                      <Outlet />
-                    </Layout>
+                    <Authenticated key="public-routes" fallback={<Outlet />}>
+                      <NavigateToResource fallbackTo="/" />
+                    </Authenticated>
+                  }
+                >
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                </Route>
+                <Route
+                  element={
+                    <Authenticated key="private-routes" fallback={<Login />}>
+                      <Layout>
+                        <Outlet />
+                      </Layout>
+                    </Authenticated>
                   }
                 >
                   <Route path="/" element={<Dashboard />} />
