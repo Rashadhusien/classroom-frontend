@@ -65,9 +65,10 @@ export const SignUpForm = () => {
           name: values.name,
           image: values.image || undefined,
           imageCldPubId: values.imageCldPubId || undefined,
+          redirect: false,
         },
         {
-          onSuccess: (data) => {
+          onSuccess: (data: any) => {
             if (data.success === false) {
               toast.error(data.error?.message, {
                 richColors: true,
@@ -79,6 +80,13 @@ export const SignUpForm = () => {
               richColors: true,
             });
             form.reset();
+
+            // Redirect based on user role
+            if (data?.data?.user?.role === "student") {
+              window.location.href = "/";
+            } else {
+              window.location.href = "/dashboard";
+            }
           },
         },
       );

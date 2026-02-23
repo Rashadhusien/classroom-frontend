@@ -1,17 +1,8 @@
-import { UserAvatar } from "@/components/refine-ui/layout/user-avatar";
+import UserDropdown from "@/components/UserDropdown";
 import { ThemeToggle } from "@/components/refine-ui/theme/theme-toggle";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import { User } from "@/types";
-import { useGetIdentity, useLogout } from "@refinedev/core";
-import { LogOutIcon } from "lucide-react";
 
 export const Header = () => {
   const { isMobile } = useSidebar();
@@ -102,49 +93,6 @@ function MobileHeader() {
     </header>
   );
 }
-
-const UserDropdown = () => {
-  const { data: user } = useGetIdentity<User>();
-  const { mutate: logout, isPending: isLoggingOut } = useLogout();
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <UserAvatar />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-64">
-        <div className="px-3 py-2">
-          <p className="text-sm font-semibold">
-            {user?.name ?? "Signed in user"}
-          </p>
-          {user?.email && (
-            <p className="text-xs text-muted-foreground truncate">
-              {user.email}
-            </p>
-          )}
-          {user?.role && (
-            <span className="mt-2 inline-flex items-center rounded-sm bg-muted px-2 py-0.5 text-xs font-semibold uppercase text-muted-foreground">
-              {user.role}
-            </span>
-          )}
-        </div>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={() => {
-            logout();
-          }}
-        >
-          <LogOutIcon
-            className={cn("text-destructive", "hover:text-destructive")}
-          />
-          <span className={cn("text-destructive", "hover:text-destructive")}>
-            {isLoggingOut ? "Logging out..." : "Logout"}
-          </span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
 
 Header.displayName = "Header";
 MobileHeader.displayName = "MobileHeader";

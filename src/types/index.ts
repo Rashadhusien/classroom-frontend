@@ -121,3 +121,55 @@ export type SignUpPayload = {
   imageCldPubId?: string;
   role: UserRole;
 };
+
+export interface EnrollmentRow {
+  id: number;
+  studentId: string;
+  classId: number;
+  student: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    image?: string | null;
+  };
+  class: {
+    id: number;
+    subjectId: number;
+    teacherId: string;
+    inviteCode: string;
+    name: string;
+    bannerCldPubId?: string | null;
+    bannerUrl?: string | null;
+    description: string;
+    capacity: number;
+    status: string;
+    schedules: any[];
+    createdAt: string;
+    updatedAt: string;
+  };
+  subject: {
+    id: number;
+    departmentId: number;
+    name: string;
+    code: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  department: {
+    id: number;
+    code: string;
+    name: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  teacher: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    image?: string;
+  };
+}

@@ -42,6 +42,8 @@ import FacultyShow from "./pages/faculty/Show";
 import EnrollmentsCreate from "./pages/enrollments/create";
 import EnrollmentsConfirm from "./pages/enrollments/confirm";
 import EnrollmentsJoin from "./pages/enrollments/join";
+import EnrollmentsList from "./pages/enrollments/list";
+import Application from "./pages/Application";
 
 function App() {
   return (
@@ -62,34 +64,34 @@ function App() {
               resources={[
                 {
                   name: "dashboard",
-                  list: "/",
-                  meta: { label: "Home", icon: <Home /> },
+                  list: "/dashboard",
+                  meta: { label: "Dashboard", icon: <Home /> },
                 },
                 {
                   name: "subjects",
-                  list: "/subjects",
-                  create: "/subjects/create",
-                  show: "/subjects/show/:id",
+                  list: "/dashboard/subjects",
+                  create: "/dashboard/subjects/create",
+                  show: "/dashboard/subjects/show/:id",
                   meta: { label: "Subjects", icon: <BookOpen /> },
                 },
                 {
                   name: "classes",
-                  list: "/classes",
-                  create: "/classes/create",
-                  show: "/classes/show/:id",
+                  list: "/dashboard/classes",
+                  create: "/dashboard/classes/create",
+                  show: "/dashboard/classes/show/:id",
                   meta: { label: "Classes", icon: <GraduationCap /> },
                 },
                 {
                   name: "departments",
-                  list: "/departments",
-                  create: "/departments/create",
-                  show: "/departments/show/:id",
+                  list: "/dashboard/departments",
+                  create: "/dashboard/departments/create",
+                  show: "/dashboard/departments/show/:id",
                   meta: { label: "Departments", icon: <Building2 /> },
                 },
                 {
                   name: "faculty",
-                  list: "/faculty",
-                  show: "/faculty/show/:id",
+                  list: "/dashboard/faculty",
+                  show: "/dashboard/faculty/show/:id",
                   meta: {
                     label: "Faculty",
                     icon: <Users />,
@@ -97,8 +99,8 @@ function App() {
                 },
                 {
                   name: "enrollments",
-                  list: "/enrollments/create",
-                  create: "/enrollments/create",
+                  list: "/dashboard/enrollments",
+                  create: "/dashboard/enrollments/create",
                   meta: {
                     label: "Enrollments",
                     icon: <ClipboardCheck />,
@@ -107,16 +109,21 @@ function App() {
               ]}
             >
               <Routes>
+                {/* Public routes - redirect authenticated users away */}
                 <Route
                   element={
                     <Authenticated key="public-routes" fallback={<Outlet />}>
-                      <NavigateToResource fallbackTo="/" />
+                      <NavigateToResource resource="dashboard" />
                     </Authenticated>
                   }
                 >
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                 </Route>
+
+                {/* Allow manual redirect from login/register */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 <Route
                   element={
                     <Authenticated key="private-routes" fallback={<Login />}>
@@ -126,31 +133,35 @@ function App() {
                     </Authenticated>
                   }
                 >
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/subjects">
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/dashboard/subjects">
                     <Route index element={<SubjectsList />} />
                     <Route path="create" element={<SubjectsCreate />} />
                     <Route path="show/:id" element={<SubjectsShow />} />
                   </Route>
-                  <Route path="/classes">
+                  <Route path="/dashboard/classes">
                     <Route index element={<ClassesList />} />
                     <Route path="create" element={<ClassesCreate />} />
                     <Route path="show/:id" element={<ClassesShow />} />
                   </Route>
-                  <Route path="/departments">
+                  <Route path="/dashboard/departments">
                     <Route index element={<DepartmentsList />} />
                     <Route path="create" element={<DepartmentsCreate />} />
                     <Route path="show/:id" element={<DepartmentsShow />} />
                   </Route>
-                  <Route path="/faculty">
+                  <Route path="/dashboard/faculty">
                     <Route index element={<FacultyList />} />
                     <Route path="show/:id" element={<FacultyShow />} />
                   </Route>
-                  <Route path="/enrollments">
+                  <Route path="/dashboard/enrollments">
+                    <Route index element={<EnrollmentsList />} />
                     <Route path="join" element={<EnrollmentsJoin />} />
                     <Route path="create" element={<EnrollmentsCreate />} />
                     <Route path="confirm" element={<EnrollmentsConfirm />} />
                   </Route>
+                </Route>
+                <Route path="/">
+                  <Route index element={<Application />} />
                 </Route>
               </Routes>
               <Toaster />

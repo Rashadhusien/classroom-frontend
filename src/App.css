@@ -185,14 +185,105 @@ body {
   letter-spacing: var(--tracking-normal);
 }
 
+/* custom scrollbar */
+
 @layer base {
   * {
     @apply border-border outline-ring/50 antialiased;
-    font-family: var(--font-sans);
   }
-  body {
-    @apply bg-background text-foreground;
+
+  /* Custom scrollbar styling */
+  *::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
   }
+
+  *::-webkit-scrollbar-track {
+    background: hsl(var(--border));
+    border-radius: 4px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 4px;
+    border: 1px solid hsl(var(--border));
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary));
+  }
+
+  Firefox scrollbar * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border));
+  }
+
+  *::-moz-scrollbar-track {
+    background: hsl(var(--border));
+    border-radius: 4px;
+  }
+
+  *::-moz-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 4px;
+    border: 1px solid hsl(var(--border));
+  }
+
+  *::-moz-scrollbar-thumb:hover {
+    background: hsl(var(--primary));
+  }
+
+  /* Chrome, Edge, Safari scrollbar */
+  *::-webkit-scrollbar,
+  *::-moz-scrollbar,
+  *::-ms-scrollbar,
+  *::-o-scrollbar,
+  *::-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border));
+    scrollbar-track-color: hsl(var(--border));
+    scrollbar-thumb-color: hsl(var(--muted-foreground) / 0.3);
+    scrollbar-thumb-border-radius: 4px;
+    scrollbar-thumb-border: 1px solid hsl(var(--border));
+  }
+
+  *::-webkit-scrollbar-thumb:hover,
+  *::-moz-scrollbar-thumb:hover,
+  *::-ms-scrollbar-thumb:hover,
+  *::-o-scrollbar-thumb:hover,
+  *::-scrollbar-thumb:hover {
+    scrollbar-thumb-color: hsl(var(--primary));
+  }
+
+  /* Hide scrollbar for horizontal scrolling */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide::-moz-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide::-ms-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide::-o-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  font-family: var(--font-sans);
+}
+body {
+  @apply bg-background text-foreground;
 }
 
 @layer components {

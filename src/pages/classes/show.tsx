@@ -8,10 +8,12 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ClassDetails } from "@/types";
 import { useShow } from "@refinedev/core";
+import { useNavigate } from "react-router";
 import { AdvancedImage } from "@cloudinary/react";
 import { bannerPhoto } from "@/lib/cloudinary";
 const Show = () => {
   const { query } = useShow<ClassDetails>({ resource: "classes" });
+  const navigate = useNavigate();
 
   const classDetails = query.data?.data;
 
@@ -131,7 +133,11 @@ const Show = () => {
           </ol>
         </div>
 
-        <Button size={"lg"} className="w-full">
+        <Button
+          size={"lg"}
+          className="w-full"
+          onClick={() => navigate("/enrollments/join")}
+        >
           Join Class
         </Button>
       </Card>

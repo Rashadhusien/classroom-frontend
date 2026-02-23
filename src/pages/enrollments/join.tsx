@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useCreate, useGetIdentity } from "@refinedev/core";
+import { useCreate, useGetIdentity, useNotification } from "@refinedev/core";
 import { useNavigate } from "react-router";
 
 import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
@@ -28,6 +28,7 @@ type JoinFormValues = z.infer<typeof joinSchema>;
 
 const EnrollmentsJoin = () => {
   const navigate = useNavigate();
+  const { open } = useNotification();
   const {
     mutateAsync: joinEnrollment,
     mutation: { isPending },
@@ -44,21 +45,46 @@ const EnrollmentsJoin = () => {
   const inviteCode = form.watch("inviteCode");
 
   const onSubmit = async (values: JoinFormValues) => {
-    if (!currentUser?.id) return;
+    if (!currentUser?.id) {
+      open?.({
+        type: "error",
+        message: "Authentication Required",
+        description: "Please sign in to join a class.",
+      });
+      return;
+    }
 
-    const response = await joinEnrollment({
-      resource: "enrollments/join",
-      values: {
-        inviteCode: values.inviteCode,
-        studentId: currentUser.id,
-      },
-    });
+    try {
+      const response = await joinEnrollment({
+        resource: "enrollments/join",
+        values: {
+          inviteCode: values.inviteCode,
+          studentId: currentUser.id,
+        },
+      });
 
-    navigate("/enrollments/confirm", {
-      state: {
-        enrollment: response?.data,
-      },
-    });
+      open?.({
+        type: "success",
+        message: "Successfully Joined Class!",
+        description: "You have been enrolled in the class.",
+      });
+
+      navigate("/enrollments/confirm", {
+        state: {
+          enrollment: response?.data,
+        },
+      });
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Invalid invite code or server error. Please try again.";
+      open?.({
+        type: "error",
+        message: "Failed to Join Class",
+        description: errorMessage,
+      });
+    }
   };
 
   const isSubmitDisabled = isPending || !currentUser?.id || !inviteCode;
