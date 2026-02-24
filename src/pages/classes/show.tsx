@@ -89,7 +89,7 @@ const Show = () => {
               variant={status === "active" ? "default" : "secondary"}
               data-status={status}
             >
-              {status.toUpperCase()}
+              {status && status.toUpperCase()}
             </Badge>
           </div>
         </div>
