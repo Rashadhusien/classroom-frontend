@@ -86,18 +86,15 @@ const DocumentView = () => {
                   <div className="flex-1">
                     {/* Content Preview */}
                     {isVideo && (
-                      <div className="mt-3 overflow-auto rounded-lg w-full">
+                      <div className="mt-3 overflow-auto rounded-lg w-full h-full">
                         <ReactPlayer
                           src={content.url}
                           controls
                           width="100%"
                           height="100%"
                           style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%",
+                            width: "auto",
+                            height: "auto",
                             aspectRatio: "16/9",
                             borderRadius: "8px",
                           }}
