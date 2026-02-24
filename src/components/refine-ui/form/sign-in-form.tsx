@@ -52,24 +52,11 @@ export const SignInForm = () => {
 
   const handleSignIn = async (values: SignInFormValues) => {
     try {
-      login(
-        {
-          email: values.email,
-          password: values.password,
-          redirect: false, // Disable automatic redirect
-        },
-        {
-          onSuccess: (data: any) => {
-            const userRole = data?.user?.role || data?.role;
-
-            if (userRole === "student") {
-              window.location.href = "/";
-            } else {
-              window.location.href = "/dashboard";
-            }
-          },
-        },
-      );
+      login({
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
     } catch (error) {
       console.log("Unexpected error:", error);
     }

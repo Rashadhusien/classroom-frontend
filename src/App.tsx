@@ -45,7 +45,6 @@ import EnrollmentsCreate from "./pages/enrollments/create";
 import EnrollmentsConfirm from "./pages/enrollments/confirm";
 import EnrollmentsJoin from "./pages/enrollments/join";
 import EnrollmentsList from "./pages/enrollments/list";
-import Application from "./pages/Application";
 import LecturesList from "./pages/lectures/List";
 import LecturesShow from "./pages/lectures/Show";
 import LecturesCreate from "./pages/lectures/Create";
@@ -190,9 +189,6 @@ function App() {
                         element={<LecturesDocumentView />}
                       />
                     </Route>
-                  </Route>
-                  <Route path="/">
-                    <Route index element={<Application />} />
                   </Route>
                 </Routes>
                 <Toaster />

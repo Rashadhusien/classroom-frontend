@@ -59,37 +59,13 @@ export const SignUpForm = () => {
 
   const onSubmit = async (values: RegisterFormValues) => {
     try {
-      register(
-        {
-          ...values,
-          name: values.name,
-          image: values.image || undefined,
-          imageCldPubId: values.imageCldPubId || undefined,
-          redirect: false,
-        },
-        {
-          onSuccess: (data: any) => {
-            if (data.success === false) {
-              toast.error(data.error?.message, {
-                richColors: true,
-              });
-              return;
-            }
-
-            toast.success("Account created successfully!", {
-              richColors: true,
-            });
-            form.reset();
-
-            // Redirect based on user role
-            if (data?.data?.user?.role === "student") {
-              window.location.href = "/";
-            } else {
-              window.location.href = "/dashboard";
-            }
-          },
-        },
-      );
+      register({
+        ...values,
+        name: values.name,
+        image: values.image || undefined,
+        imageCldPubId: values.imageCldPubId || undefined,
+        redirect: false,
+      });
     } catch (error) {
       console.error("Registration error:", error);
       toast.error("Registration failed", {

@@ -1,25 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
-import { UserAvatar } from "@/components/refine-ui/layout/user-avatar";
 import { ThemeToggle } from "@/components/refine-ui/theme/theme-toggle";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { cn } from "@/lib/utils";
 import { User as UserType } from "@/types";
-import { useGetIdentity, useLogout } from "@refinedev/core";
-import { LogOutIcon, Home, BookOpen, Menu } from "lucide-react";
+import { useGetIdentity } from "@refinedev/core";
+import { Home, BookOpen, Menu } from "lucide-react";
 import UserDropdown from "../UserDropdown";
 
 const Header = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: user } = useGetIdentity<UserType>();
-  const { mutate: logout, isPending: isLoggingOut } = useLogout();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -134,21 +127,19 @@ const Header = () => {
       {/* Right Side */}
       <div className="flex items-center gap-2">
         <ThemeToggle className="h-6 w-6" />
-        {user && (
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <UserAvatar />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuItem
-                onClick={() => logout()}
-                className="text-destructive hover:text-destructive"
-              >
-                <LogOutIcon className="w-4 h-4 mr-2" />
-                {isLoggingOut ? "Logging out..." : "Logout"}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        {user ? (
+          <UserDropdown />
+        ) : (
+          <div className="flex items-center gap-2">
+            <Link to="/login">
+              <Button variant="outline" size="sm">
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/register">
+              <Button size="sm">Sign Up</Button>
+            </Link>
+          </div>
         )}
       </div>
     </header>
