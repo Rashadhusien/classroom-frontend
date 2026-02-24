@@ -11,16 +11,18 @@ import { Badge } from "@/components/ui/badge";
 //   SelectContent,
 //   SelectItem,
 // } from "@radix-ui/react-select";
-import { Search } from "lucide-react";
+import { Search, BookOpen } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTable } from "@refinedev/react-table";
 import { EnrollmentRow } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router";
 
 const EnrollmentsList = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  // const [selectedDepartment, setSelectedDepartment] = useState("all");
+  const navigate = useNavigate();
 
   const searchFilters = searchQuery
     ? [
@@ -88,21 +90,33 @@ const EnrollmentsList = () => {
       },
       {
         id: "details",
-        size: 100,
-        header: () => <p className="column-title">Details</p>,
+        size: 150,
+        header: () => <p className="column-title">Actions</p>,
         cell: ({ row }) => (
-          <ShowButton
-            resource="enrollments"
-            recordItemId={row.original.id}
-            variant="outline"
-            size="sm"
-          >
-            View
-          </ShowButton>
+          <div className="flex gap-2">
+            <ShowButton
+              resource="enrollments"
+              recordItemId={row.original.id}
+              variant="outline"
+              size="sm"
+            >
+              View
+            </ShowButton>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                navigate(`/dashboard/lectures?classId=${row.original.classId}`)
+              }
+            >
+              <BookOpen className="w-4 h-4 mr-1" />
+              Lectures
+            </Button>
+          </div>
         ),
       },
     ],
-    [],
+    [navigate],
   );
   const enrollmentsTable = useTable({
     columns: enrollmentColumns,

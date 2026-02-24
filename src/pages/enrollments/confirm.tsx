@@ -101,12 +101,14 @@ const EnrollmentConfirm = () => {
           </div>
           <Separator />
           <div className="flex gap-2">
-            <Button onClick={() => navigate("/classes")}>View Classes</Button>
+            <Button onClick={() => navigate("/dashboard/classes")}>
+              View Classes
+            </Button>
             {enrollment.class?.id && (
               <Button
                 variant="outline"
                 onClick={() =>
-                  navigate(`/classes/show/${enrollment.class?.id}`)
+                  navigate(`/dashboard/classes/show/${enrollment.class?.id}`)
                 }
               >
                 Go to Class

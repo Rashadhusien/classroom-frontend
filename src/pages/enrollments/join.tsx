@@ -1,8 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useCreate, useGetIdentity, useNotification } from "@refinedev/core";
-import { useNavigate } from "react-router";
+import {
+  useCreate,
+  useGetIdentity,
+  useNotification,
+  useShow,
+} from "@refinedev/core";
+import { useNavigate, useSearchParams } from "react-router";
 
 import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
 import { CreateView } from "@/components/refine-ui/views/create-view";
@@ -28,17 +33,30 @@ type JoinFormValues = z.infer<typeof joinSchema>;
 
 const EnrollmentsJoin = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { open } = useNotification();
+  const classId = searchParams.get("classId");
   const {
     mutateAsync: joinEnrollment,
     mutation: { isPending },
   } = useCreate();
   const { data: currentUser } = useGetIdentity<User>();
 
+  // Fetch class details if classId is provided to get invite code
+  const { query: classQuery } = useShow({
+    resource: "classes",
+    id: classId || "",
+    queryOptions: {
+      enabled: !!classId,
+    },
+  });
+
+  const classDetails = classQuery.data?.data;
+
   const form = useForm<JoinFormValues>({
     resolver: zodResolver(joinSchema),
     defaultValues: {
-      inviteCode: "",
+      inviteCode: classDetails?.inviteCode || "",
     },
   });
 
@@ -69,7 +87,7 @@ const EnrollmentsJoin = () => {
         description: "You have been enrolled in the class.",
       });
 
-      navigate("/enrollments/confirm", {
+      navigate("/dashboard/enrollments/confirm", {
         state: {
           enrollment: response?.data,
         },
@@ -93,9 +111,15 @@ const EnrollmentsJoin = () => {
     <CreateView className="class-view">
       <Breadcrumb />
 
-      <h1 className="page-title">Join by Invite Code</h1>
+      <h1 className="page-title">
+        {classDetails ? `Join ${classDetails.name}` : "Join by Invite Code"}
+      </h1>
       <div className="intro-row">
-        <p>Enter the invite code provided by your instructor.</p>
+        <p>
+          {classDetails
+            ? `Enter the invite code for ${classDetails.name}.`
+            : "Enter invite code provided by your instructor."}
+        </p>
       </div>
 
       <Separator />

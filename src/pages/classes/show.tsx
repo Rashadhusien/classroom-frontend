@@ -6,14 +6,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ClassDetails } from "@/types";
-import { useShow } from "@refinedev/core";
+import { ClassDetails, User } from "@/types";
+import { useGetIdentity, useShow } from "@refinedev/core";
 import { useNavigate } from "react-router";
 import { AdvancedImage } from "@cloudinary/react";
 import { bannerPhoto } from "@/lib/cloudinary";
+import { BookOpen } from "lucide-react";
 const Show = () => {
   const { query } = useShow<ClassDetails>({ resource: "classes" });
   const navigate = useNavigate();
+  const { data: currentUser } = useGetIdentity<User>();
 
   const classDetails = query.data?.data;
 
@@ -115,8 +117,13 @@ const Show = () => {
 
         <div className="subject">
           <p>Subject</p>
-          <div>
+          <div className="flex flex-col gap-2">
             <Badge variant={"outline"}>Code: {subject?.code}</Badge>
+            {currentUser?.role !== "student" && (
+              <Badge variant={"outline"}>
+                Invite Code: {classDetails.inviteCode}
+              </Badge>
+            )}
             <p>{subject?.name}</p>
             <p>{subject?.description}</p>
           </div>
@@ -125,21 +132,57 @@ const Show = () => {
         <Separator />
 
         <div className="join">
-          <h2>Join Class</h2>
-          <ol>
-            <li>Ask your Teacher for the invite code</li>
-            <li>Click on "Join Class" button</li>
-            <li>Paste the code and click "Join"</li>
-          </ol>
-        </div>
+          <h2>Class Actions</h2>
+          <div className="flex flex-col gap-3">
+            {(classDetails.isEnrolled ||
+              (currentUser?.role === "teacher" &&
+                classDetails.teacher?.id === currentUser?.id)) && (
+              <Button
+                size={"lg"}
+                className="w-full"
+                onClick={() =>
+                  navigate(`/dashboard/lectures?classId=${classDetails.id}`, {
+                    replace: true,
+                    state: {
+                      classId: classDetails.id,
+                      className: classDetails.name,
+                    },
+                  })
+                }
+              >
+                <BookOpen className="w-4 h-4 mr-2" />
+                {currentUser?.role === "teacher" &&
+                classDetails.teacher?.id === currentUser?.id
+                  ? "Create Lecture"
+                  : "View Lectures"}
+              </Button>
+            )}
 
-        <Button
-          size={"lg"}
-          className="w-full"
-          onClick={() => navigate("/enrollments/join")}
-        >
-          Join Class
-        </Button>
+            {!classDetails.isEnrolled && currentUser?.role === "student" && (
+              <Button
+                size={"lg"}
+                variant="outline"
+                className="w-full"
+                onClick={() =>
+                  navigate(
+                    `/dashboard/enrollments/join?classId=${classDetails.id}`,
+                  )
+                }
+              >
+                Join Class
+              </Button>
+            )}
+          </div>
+
+          <div className="mt-4">
+            <h3>How to Join</h3>
+            <ol>
+              <li>Ask your Teacher for the invite code</li>
+              <li>Click on "Join Class" button</li>
+              <li>Paste code and click "Join"</li>
+            </ol>
+          </div>
+        </div>
       </Card>
     </ShowView>
   );

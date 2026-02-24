@@ -35,6 +35,9 @@ declare global {
       delete_token?: string;
       resource_type: string;
       original_filename: string;
+      format?: string;
+      bytes?: number;
+      type?: string;
     };
   }
 
@@ -58,6 +61,8 @@ declare global {
 export interface UploadWidgetValue {
   url: string;
   publicId: string;
+  sizeBytes?: number;
+  mimeType?: string;
 }
 
 export interface UploadWidgetProps {
@@ -111,6 +116,9 @@ export type ClassDetails = {
   department?: Department;
   schedules: Schedule[];
   inviteCode?: string;
+  isEnrolled?: boolean;
+  totalEnrollments?: number;
+  totalLectures?: number;
 };
 
 export type SignUpPayload = {
@@ -172,4 +180,34 @@ export interface EnrollmentRow {
     role: string;
     image?: string;
   };
+}
+
+export interface LectureContent {
+  id: number;
+  lectureId: number;
+  type: "video" | "image" | "document";
+  title: string;
+  url: string;
+  cldPubId: string | null;
+  mimeType: string | null;
+  sizeBytes: number | null;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Lecture {
+  id: number;
+  title: string;
+  description: string | null;
+  order: number;
+  isPublished: boolean;
+  classId: number;
+  createdAt: string;
+  updatedAt: string;
+  totalContents: number;
+  videoCount: number;
+  imageCount: number;
+  documentCount: number;
+  contents: LectureContent[];
 }

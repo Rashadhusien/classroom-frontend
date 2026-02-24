@@ -46,6 +46,16 @@ const options: CreateDataProviderOptions = {
           if (field === "subject") params.subject = value;
           if (field === "teacher") params.teacher = value;
         }
+
+        if (resource === "lectures") {
+          if (field === "classId") params.classId = value;
+        }
+
+        if (resource === "lecture-content") {
+          if (field === "lectureId") params.lectureId = value;
+          if (field === "title" || field === "description")
+            params.search = value;
+        }
       });
 
       return params;
@@ -83,6 +93,8 @@ const options: CreateDataProviderOptions = {
   },
 };
 
-const { dataProvider } = createDataProvider(BACKEND_BASE_URL, options);
+const { dataProvider } = createDataProvider(BACKEND_BASE_URL, options, {
+  credentials: "include",
+});
 
 export { dataProvider };

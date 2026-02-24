@@ -54,7 +54,7 @@ const HowItWorks = () => {
 
         {/* Steps Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {steps.map((step, index) => {
+          {steps.map((step) => {
             const Icon = step.icon;
             return (
               <div key={step.id} className="relative">
@@ -95,15 +95,6 @@ const HowItWorks = () => {
                     </Button>
                   </CardContent>
                 </Card>
-
-                {/* Arrow Connector */}
-                {index < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-20">
-                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                      <ArrowRight className="w-4 h-4 text-primary-foreground" />
-                    </div>
-                  </div>
-                )}
               </div>
             );
           })}
