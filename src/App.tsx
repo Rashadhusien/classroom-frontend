@@ -53,6 +53,8 @@ import LecturesCreate from "./pages/lectures/Create";
 import LecturesEdit from "./pages/lectures/Edit";
 import LecturesDocumentView from "./pages/lectures/DocumentView";
 
+import Profile from "./pages/profile";
+
 function App() {
   return (
     <BrowserRouter>
@@ -157,32 +159,32 @@ function App() {
                     }
                   >
                     <Route path="/" element={<Dashboard />} />
-                    <Route path="/subjects">
+                    <Route path="subjects">
                       <Route index element={<SubjectsList />} />
                       <Route path="create" element={<SubjectsCreate />} />
                       <Route path="show/:id" element={<SubjectsShow />} />
                     </Route>
-                    <Route path="/classes">
+                    <Route path="classes">
                       <Route index element={<ClassesList />} />
                       <Route path="create" element={<ClassesCreate />} />
                       <Route path="show/:id" element={<ClassesShow />} />
                     </Route>
-                    <Route path="/departments">
+                    <Route path="departments">
                       <Route index element={<DepartmentsList />} />
                       <Route path="create" element={<DepartmentsCreate />} />
                       <Route path="show/:id" element={<DepartmentsShow />} />
                     </Route>
-                    <Route path="/faculty">
+                    <Route path="faculty">
                       <Route index element={<FacultyList />} />
                       <Route path="show/:id" element={<FacultyShow />} />
                     </Route>
-                    <Route path="/enrollments">
+                    <Route path="enrollments">
                       <Route index element={<EnrollmentsList />} />
                       <Route path="join" element={<EnrollmentsJoin />} />
                       <Route path="create" element={<EnrollmentsCreate />} />
                       <Route path="confirm" element={<EnrollmentsConfirm />} />
                     </Route>
-                    <Route path="/lectures">
+                    <Route path="lectures">
                       <Route index element={<LecturesList />} />
                       <Route path="create" element={<LecturesCreate />} />
                       <Route path="show/:id" element={<LecturesShow />} />
@@ -192,6 +194,7 @@ function App() {
                         element={<LecturesDocumentView />}
                       />
                     </Route>
+                    <Route path="profile" element={<Profile />} />
                   </Route>
                 </Routes>
                 <Toaster />

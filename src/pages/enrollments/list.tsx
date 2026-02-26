@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 //   SelectContent,
 //   SelectItem,
 // } from "@radix-ui/react-select";
-import { Search, BookOpen } from "lucide-react";
+import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTable } from "@refinedev/react-table";
 import { EnrollmentRow } from "@/types";
@@ -90,7 +90,7 @@ const EnrollmentsList = () => {
       },
       {
         id: "details",
-        size: 150,
+        size: 200,
         header: () => <p className="column-title">Actions</p>,
         cell: ({ row }) => (
           <div className="flex gap-2">
@@ -109,7 +109,6 @@ const EnrollmentsList = () => {
                 navigate(`/lectures?classId=${row.original.classId}`)
               }
             >
-              <BookOpen className="w-4 h-4 mr-1" />
               Lectures
             </Button>
           </div>

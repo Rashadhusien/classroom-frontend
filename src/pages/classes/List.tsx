@@ -210,7 +210,7 @@ const ClassesList = () => {
         </div>
       </div>
 
-      <DataTable table={classTable} />
+      {classTable && <DataTable table={classTable} />}
     </ListView>
   );
 };

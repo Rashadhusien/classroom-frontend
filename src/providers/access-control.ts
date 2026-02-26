@@ -11,14 +11,8 @@ const ROLE_PERMISSIONS = {
   },
   teacher: {
     // Teacher permissions
-    resources: [
-      "classes",
-      "lectures",
-      "subjects",
-      "departments",
-      "enrollments",
-    ],
-    actions: ["list", "show", "create", "edit", "delete"],
+    resources: ["*"],
+    actions: ["*"],
   },
   student: {
     // Student permissions

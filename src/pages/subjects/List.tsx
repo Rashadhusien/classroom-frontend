@@ -18,13 +18,13 @@ import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 
-import { Department, Subject } from "@/types";
-import { useList } from "@refinedev/core";
+import { Department, Subject, User } from "@/types";
+import { useGetIdentity, useList } from "@refinedev/core";
 
 const SubjectListPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState<string>("all");
-
+  const { data: currentUser } = useGetIdentity<User>();
   const subjectColumns = useMemo<ColumnDef<Subject>[]>(
     () => [
       {
@@ -125,6 +125,32 @@ const SubjectListPage = () => {
     },
   });
 
+  const subjectStudentTable = useTable<Subject>({
+    columns: subjectColumns,
+    refineCoreProps: {
+      resource: "subjects/student",
+      pagination: {
+        pageSize: 10,
+        mode: "server",
+      },
+      filters: {
+        // Compose refine filters from the current UI selections.
+        permanent: [...departmentFilters, ...searchFilters],
+      },
+      sorters: {
+        initial: [
+          {
+            field: "id",
+            order: "desc",
+          },
+        ],
+      },
+    },
+  });
+
+  const table =
+    currentUser?.role === "student" ? subjectStudentTable : subjectTable;
+
   const { query: departmentsQuery } = useList<Department>({
     resource: "departments",
     pagination: { pageSize: 100 },
@@ -178,8 +204,7 @@ const SubjectListPage = () => {
           </div>
         </div>
       </div>
-
-      <DataTable table={subjectTable} />
+      {table && <DataTable table={table} />}
     </ListView>
   );
 };

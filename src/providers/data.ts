@@ -2,6 +2,7 @@ import { createDataProvider, CreateDataProviderOptions } from "@refinedev/rest";
 
 import { CreateResponse, GetOneResponse, ListResponse } from "@/types";
 import { BACKEND_BASE_URL } from "@/constants";
+import { UpdateResponse } from "@refinedev/core";
 
 const options: CreateDataProviderOptions = {
   getList: {
@@ -36,12 +37,20 @@ const options: CreateDataProviderOptions = {
           }
         }
 
-        if (resource === "subjects") {
+        if (
+          resource === "subjects" ||
+          resource === "subjects/teacher" ||
+          resource === "subjects/student"
+        ) {
           if (field === "department") params.department = value;
           if (field === "name" || field === "code") params.search = value;
         }
 
-        if (resource === "classes") {
+        if (
+          resource === "classes" ||
+          resource === "classes/student" ||
+          resource === "classes/teacher"
+        ) {
           if (field === "name") params.search = value;
           if (field === "subject") params.subject = value;
           if (field === "teacher") params.teacher = value;
@@ -79,6 +88,26 @@ const options: CreateDataProviderOptions = {
 
     mapResponse: async (response) => {
       const json: CreateResponse = await response.json();
+      return json.data ?? {};
+    },
+  },
+
+  update: {
+    getEndpoint: ({ resource, id }) => `${resource}/${id}`,
+
+    buildBodyParams: async ({ variables }) => variables,
+
+    mapResponse: async (response) => {
+      const json: UpdateResponse = await response.json();
+      return json.data ?? {};
+    },
+  },
+
+  deleteOne: {
+    getEndpoint: ({ resource, id }) => `${resource}/${id}`,
+
+    mapResponse: async (response) => {
+      const json: GetOneResponse = await response.json();
       return json.data ?? {};
     },
   },
