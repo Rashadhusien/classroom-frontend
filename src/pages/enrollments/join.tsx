@@ -87,7 +87,7 @@ const EnrollmentsJoin = () => {
         description: "You have been enrolled in the class.",
       });
 
-      navigate("/dashboard/enrollments/confirm", {
+      navigate("/enrollments/confirm", {
         state: {
           enrollment: response?.data,
         },

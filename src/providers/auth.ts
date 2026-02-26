@@ -37,7 +37,7 @@ export const authProvider: AuthProvider = {
 
       return {
         success: true,
-        redirectTo: "/dashboard",
+        redirectTo: "/",
       };
     } catch (error) {
       console.error("Register error:", error);
@@ -73,7 +73,7 @@ export const authProvider: AuthProvider = {
 
       return {
         success: true,
-        redirectTo: "/dashboard",
+        redirectTo: "/",
       };
     } catch (error) {
       console.error("Login exception:", error);

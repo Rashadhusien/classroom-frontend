@@ -62,7 +62,7 @@ const Header = () => {
           Home
         </Link>
         <Link
-          to="/dashboard/classes"
+          to="/classes"
           className="text-foreground hover:text-primary transition-colors font-medium"
         >
           <BookOpen className="w-4 h-4 inline mr-1" />

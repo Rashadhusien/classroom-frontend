@@ -138,7 +138,7 @@ const DepartmentHeilight = () => {
                   </div>
                   <Button asChild className="w-full mt-6">
                     <Link
-                      to={`/dashboard/departments/${dept.id}`}
+                      to={`/departments/${dept.id}`}
                       className="flex items-center justify-center gap-2"
                     >
                       <Users className="w-4 h-4" />
@@ -154,10 +154,7 @@ const DepartmentHeilight = () => {
         {/* View All Departments Button */}
         <div className="text-center mt-8">
           <Button asChild size="lg" className="px-8">
-            <Link
-              to="/dashboard/departments"
-              className="flex items-center gap-2"
-            >
+            <Link to="/departments" className="flex items-center gap-2">
               <Building className="w-5 h-5" />
               View All Departments
             </Link>

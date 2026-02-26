@@ -132,9 +132,7 @@ const LectureShow = () => {
             <Button
               variant="outline"
               size="sm"
-              onClick={() =>
-                navigate(`/dashboard/lectures/document/${row.original.id}`)
-              }
+              onClick={() => navigate(`/lectures/document/${row.original.id}`)}
             >
               View
             </Button>
@@ -191,26 +189,6 @@ const LectureShow = () => {
   return (
     <ShowView className="lecture-view lecture-show">
       <ShowViewHeader resource="lectures" title={lecture.title} />
-
-      {/* Navigation */}
-      <div className="mb-6 flex gap-2">
-        <Button
-          variant="outline"
-          onClick={() => navigate("/dashboard/lectures")}
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Lectures
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() =>
-            navigate(`/dashboard/lectures/manage-content/${lecture.id}`)
-          }
-        >
-          <Settings className="w-4 h-4 mr-2" />
-          Manage Content
-        </Button>
-      </div>
 
       {/* Lecture Info */}
       <Card className="mb-6">

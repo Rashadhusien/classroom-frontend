@@ -81,7 +81,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link
-                  to="/dashboard"
+                  to="/"
                   className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
                 >
                   <BookOpen className="w-4 h-4" />
@@ -90,7 +90,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/dashboard/classes"
+                  to="/classes"
                   className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
                 >
                   <Users className="w-4 h-4" />
@@ -99,7 +99,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/dashboard/departments"
+                  to="/departments"
                   className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
                 >
                   <Building className="w-4 h-4" />

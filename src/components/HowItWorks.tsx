@@ -23,7 +23,7 @@ const HowItWorks = () => {
         "Browse departments and join classes using invite codes or explore available courses.",
       icon: Users,
       color: "bg-green-500",
-      link: "/dashboard/classes",
+      link: "/classes",
       linkText: "Browse Classes",
     },
     {
@@ -33,7 +33,7 @@ const HowItWorks = () => {
         "Access lectures, download materials, and engage with your learning community.",
       icon: BookOpen,
       color: "bg-purple-500",
-      link: "/dashboard/enrollments",
+      link: "/enrollments",
       linkText: "My Classes",
     },
   ];
@@ -119,10 +119,7 @@ const HowItWorks = () => {
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="px-8">
-                  <Link
-                    to="/dashboard/classes"
-                    className="flex items-center gap-2"
-                  >
+                  <Link to="/classes" className="flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
                     Explore Classes
                   </Link>

@@ -18,7 +18,7 @@ import { useTable } from "@refinedev/react-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { useNavigate, useSearchParams } from "react-router";
-import { useGetIdentity, useShow } from "@refinedev/core";
+import { useShow, CanAccess } from "@refinedev/core";
 import { ClassDetails } from "@/types";
 
 interface Lecture {
@@ -41,8 +41,6 @@ const LecturesList = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const classId = searchParams.get("classId");
-
-  const { data: currentUser } = useGetIdentity<{ role: string }>();
 
   const { query: classQuery } = useShow<ClassDetails>({
     resource: "classes",
@@ -160,9 +158,7 @@ const LecturesList = () => {
             <Button
               variant="outline"
               size="sm"
-              onClick={() =>
-                navigate(`/dashboard/classes/show/${row.original.classId}`)
-              }
+              onClick={() => navigate(`/classes/show/${row.original.classId}`)}
             >
               Class
             </Button>
@@ -212,18 +208,16 @@ const LecturesList = () => {
               lecture for a specific class.
             </p>
             <div className="flex gap-2 justify-center">
-              <Button onClick={() => navigate("/dashboard/classes")}>
+              <Button onClick={() => navigate("/classes")}>
                 Browse Classes
               </Button>
-              {currentUser?.role !== "student" && (
-                <Button
-                  onClick={() => navigate("/dashboard/lectures/create")}
-                  className="flex items-center gap-2"
-                >
-                  <Plus className="w-4 h-4" />
-                  Create Lecture
-                </Button>
-              )}
+              <Button
+                onClick={() => navigate("/lectures/create")}
+                className="flex items-center gap-2"
+              >
+                <Plus className="w-4 h-4" />
+                Create Lecture
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -263,19 +257,18 @@ const LecturesList = () => {
             />
           </div>
 
-          {currentUser?.role !== "student" && (
+          <CanAccess resource="lectures" action="create">
             <div className="flex gap-2 w-full sm:w-auto">
               <Button
-                onClick={() =>
-                  navigate(`/dashboard/lectures/create?classId=${classId}`)
-                }
+                onClick={() => navigate(`/lectures/create?classId=${classId}`)}
                 className="flex items-center gap-2"
+                disabled={!classId}
               >
                 <Plus className="w-4 h-4" />
                 Create Lecture
               </Button>
             </div>
-          )}
+          </CanAccess>
         </div>
       </div>
 

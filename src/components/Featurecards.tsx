@@ -32,7 +32,7 @@ const Featurecards = () => {
               </CardDescription>
               <Button asChild className="w-full" variant="outline">
                 <Link
-                  to="/dashboard/enrollments/join"
+                  to="/enrollments/join"
                   className="flex items-center justify-center gap-2"
                 >
                   <Users className="w-4 h-4" />
@@ -58,7 +58,7 @@ const Featurecards = () => {
               </CardDescription>
               <Button asChild className="w-full">
                 <Link
-                  to="/dashboard/classes"
+                  to="/classes"
                   className="flex items-center justify-center gap-2"
                 >
                   <BookOpen className="w-4 h-4" />
@@ -85,7 +85,7 @@ const Featurecards = () => {
               </CardDescription>
               <Button asChild className="w-full" variant="outline">
                 <Link
-                  to="/dashboard/lectures"
+                  to="/lectures"
                   className="flex items-center justify-center gap-2"
                 >
                   <Play className="w-4 h-4" />
@@ -112,7 +112,7 @@ const Featurecards = () => {
               </CardDescription>
               <Button asChild className="w-full" variant="outline">
                 <Link
-                  to="/dashboard/materials"
+                  to="/materials"
                   className="flex items-center justify-center gap-2"
                 >
                   <Download className="w-4 h-4" />

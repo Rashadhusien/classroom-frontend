@@ -15,6 +15,7 @@ import { ThemeProvider } from "./components/refine-ui/theme/theme-provider";
 import { DeleteConfirmationProvider } from "./hooks/use-delete-confirmation";
 import { dataProvider } from "./providers/data";
 import { authProvider } from "./providers/auth";
+import { accessControlProvider } from "./providers/access-control";
 import Dashboard from "./pages/Dashboard";
 import {
   BookOpen,
@@ -31,6 +32,7 @@ import SubjectsCreate from "./pages/subjects/Create";
 import ClassesList from "./pages/classes/List";
 import ClassesCreate from "./pages/classes/Create";
 import ClassesShow from "./pages/classes/show";
+import Unauthorized from "./pages/Unauthorized";
 import DepartmentsList from "./pages/departments/List";
 
 import SubjectsShow from "./pages/subjects/show";
@@ -48,7 +50,7 @@ import EnrollmentsList from "./pages/enrollments/list";
 import LecturesList from "./pages/lectures/List";
 import LecturesShow from "./pages/lectures/Show";
 import LecturesCreate from "./pages/lectures/Create";
-import LecturesManageContent from "./pages/lectures/ManageContent";
+import LecturesEdit from "./pages/lectures/Edit";
 import LecturesDocumentView from "./pages/lectures/DocumentView";
 
 function App() {
@@ -61,6 +63,7 @@ function App() {
               <Refine
                 dataProvider={dataProvider}
                 authProvider={authProvider}
+                accessControlProvider={accessControlProvider}
                 notificationProvider={useNotificationProvider()}
                 routerProvider={routerProvider}
                 options={{
@@ -71,34 +74,34 @@ function App() {
                 resources={[
                   {
                     name: "dashboard",
-                    list: "/dashboard",
+                    list: "/",
                     meta: { label: "Dashboard", icon: <Home /> },
                   },
                   {
                     name: "subjects",
-                    list: "/dashboard/subjects",
-                    create: "/dashboard/subjects/create",
-                    show: "/dashboard/subjects/show/:id",
+                    list: "/subjects",
+                    create: "/subjects/create",
+                    show: "/subjects/show/:id",
                     meta: { label: "Subjects", icon: <BookOpen /> },
                   },
                   {
                     name: "classes",
-                    list: "/dashboard/classes",
-                    create: "/dashboard/classes/create",
-                    show: "/dashboard/classes/show/:id",
+                    list: "/classes",
+                    create: "/classes/create",
+                    show: "/classes/show/:id",
                     meta: { label: "Classes", icon: <GraduationCap /> },
                   },
                   {
                     name: "departments",
-                    list: "/dashboard/departments",
-                    create: "/dashboard/departments/create",
-                    show: "/dashboard/departments/show/:id",
+                    list: "/departments",
+                    create: "/departments/create",
+                    show: "/departments/show/:id",
                     meta: { label: "Departments", icon: <Building2 /> },
                   },
                   {
                     name: "faculty",
-                    list: "/dashboard/faculty",
-                    show: "/dashboard/faculty/show/:id",
+                    list: "/faculty",
+                    show: "/faculty/show/:id",
                     meta: {
                       label: "Faculty",
                       icon: <Users />,
@@ -106,8 +109,8 @@ function App() {
                   },
                   {
                     name: "enrollments",
-                    list: "/dashboard/enrollments",
-                    create: "/dashboard/enrollments/create",
+                    list: "/enrollments",
+                    create: "/enrollments/create",
                     meta: {
                       label: "Enrollments",
                       icon: <ClipboardCheck />,
@@ -115,9 +118,10 @@ function App() {
                   },
                   {
                     name: "lectures",
-                    list: "/dashboard/lectures",
-                    create: "/dashboard/lectures/create",
-                    show: "/dashboard/lectures/show/:id",
+                    list: "/lectures",
+                    create: "/lectures/create",
+                    show: "/lectures/show/:id",
+                    edit: "/lectures/edit/:id",
                     meta: {
                       label: "Lectures",
                       icon: <PlayCircle />,
@@ -136,11 +140,13 @@ function App() {
                   >
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/unauthorized" element={<Unauthorized />} />
                   </Route>
 
                   {/* Allow manual redirect from login/register */}
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
+
                   <Route
                     element={
                       <Authenticated key="private-routes" fallback={<Login />}>
@@ -150,40 +156,37 @@ function App() {
                       </Authenticated>
                     }
                   >
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/dashboard/subjects">
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/subjects">
                       <Route index element={<SubjectsList />} />
                       <Route path="create" element={<SubjectsCreate />} />
                       <Route path="show/:id" element={<SubjectsShow />} />
                     </Route>
-                    <Route path="/dashboard/classes">
+                    <Route path="/classes">
                       <Route index element={<ClassesList />} />
                       <Route path="create" element={<ClassesCreate />} />
                       <Route path="show/:id" element={<ClassesShow />} />
                     </Route>
-                    <Route path="/dashboard/departments">
+                    <Route path="/departments">
                       <Route index element={<DepartmentsList />} />
                       <Route path="create" element={<DepartmentsCreate />} />
                       <Route path="show/:id" element={<DepartmentsShow />} />
                     </Route>
-                    <Route path="/dashboard/faculty">
+                    <Route path="/faculty">
                       <Route index element={<FacultyList />} />
                       <Route path="show/:id" element={<FacultyShow />} />
                     </Route>
-                    <Route path="/dashboard/enrollments">
+                    <Route path="/enrollments">
                       <Route index element={<EnrollmentsList />} />
                       <Route path="join" element={<EnrollmentsJoin />} />
                       <Route path="create" element={<EnrollmentsCreate />} />
                       <Route path="confirm" element={<EnrollmentsConfirm />} />
                     </Route>
-                    <Route path="/dashboard/lectures">
+                    <Route path="/lectures">
                       <Route index element={<LecturesList />} />
                       <Route path="create" element={<LecturesCreate />} />
                       <Route path="show/:id" element={<LecturesShow />} />
-                      <Route
-                        path="manage-content/:id"
-                        element={<LecturesManageContent />}
-                      />
+                      <Route path="edit/:id" element={<LecturesEdit />} />
                       <Route
                         path="document/:id"
                         element={<LecturesDocumentView />}

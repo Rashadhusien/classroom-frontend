@@ -20,12 +20,10 @@ import { ShowButton } from "@/components/refine-ui/buttons/show";
 
 import { Department, Subject } from "@/types";
 import { useList } from "@refinedev/core";
-import { useGetIdentity } from "@refinedev/core";
 
 const SubjectListPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState<string>("all");
-  const { data: currentUser } = useGetIdentity<{ role: string }>();
 
   const subjectColumns = useMemo<ColumnDef<Subject>[]>(
     () => [
@@ -176,9 +174,7 @@ const SubjectListPage = () => {
               </SelectContent>
             </Select>
 
-            {currentUser?.role !== "student" && (
-              <CreateButton resource="subjects" />
-            )}
+            <CreateButton resource="subjects" />
           </div>
         </div>
       </div>

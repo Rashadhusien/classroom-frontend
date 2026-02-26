@@ -27,7 +27,7 @@ const Hero = () => {
             size="lg"
             className="px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
           >
-            <Link to="/dashboard/classes" className="flex items-center gap-2">
+            <Link to="/classes" className="flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
               Browse Classes
             </Link>
@@ -39,10 +39,7 @@ const Hero = () => {
             size="lg"
             className="px-8 py-4 text-lg font-semibold shadow-md hover:shadow-lg transition-all duration-200"
           >
-            <Link
-              to="/dashboard/enrollments/join"
-              className="flex items-center gap-2"
-            >
+            <Link to="/enrollments/join" className="flex items-center gap-2">
               <Key className="w-5 h-5" />
               Join with Code
             </Link>

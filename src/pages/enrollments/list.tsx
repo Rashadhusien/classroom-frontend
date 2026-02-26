@@ -106,7 +106,7 @@ const EnrollmentsList = () => {
               variant="outline"
               size="sm"
               onClick={() =>
-                navigate(`/dashboard/lectures?classId=${row.original.classId}`)
+                navigate(`/lectures?classId=${row.original.classId}`)
               }
             >
               <BookOpen className="w-4 h-4 mr-1" />

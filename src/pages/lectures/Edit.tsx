@@ -224,7 +224,7 @@ const LecturesManageContent = () => {
       <div className="mb-6">
         <Button
           variant="outline"
-          onClick={() => navigate(`/dashboard/lectures/show/${lectureId}`)}
+          onClick={() => navigate(`/lectures/show/${lectureId}`)}
           className="mb-4"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />

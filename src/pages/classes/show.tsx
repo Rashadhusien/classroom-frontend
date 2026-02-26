@@ -57,10 +57,11 @@ const Show = () => {
     capacity,
     teacher,
     subject,
-
     bannerCldPubId,
     department,
   } = classDetails;
+
+  console.log(classDetails);
 
   return (
     <ShowView className="class-view class-show">
@@ -141,7 +142,7 @@ const Show = () => {
                 size={"lg"}
                 className="w-full"
                 onClick={() =>
-                  navigate(`/dashboard/lectures?classId=${classDetails.id}`, {
+                  navigate(`/lectures?classId=${classDetails.id}`, {
                     replace: true,
                     state: {
                       classId: classDetails.id,
@@ -164,9 +165,7 @@ const Show = () => {
                 variant="outline"
                 className="w-full"
                 onClick={() =>
-                  navigate(
-                    `/dashboard/enrollments/join?classId=${classDetails.id}`,
-                  )
+                  navigate(`/enrollments/join?classId=${classDetails.id}`)
                 }
               >
                 Join Class

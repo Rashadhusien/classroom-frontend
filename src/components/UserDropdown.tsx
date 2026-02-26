@@ -40,20 +40,20 @@ const UserDropdown = () => {
         <DropdownMenuSeparator />
         {user?.role !== "student" && (
           <DropdownMenuItem asChild>
-            <Link to="/dashboard" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               <BookOpen className="w-4 h-4" />
               Dashboard
             </Link>
           </DropdownMenuItem>
         )}
         <DropdownMenuItem asChild>
-          <Link to="/dashboard/classes" className="flex items-center gap-2">
+          <Link to="/classes" className="flex items-center gap-2">
             <BookOpen className="w-4 h-4" />
             My Classes
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/dashboard/profile" className="flex items-center gap-2">
+          <Link to="/profile" className="flex items-center gap-2">
             <User className="w-4 h-4" />
             Profile
           </Link>
