@@ -19,8 +19,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { useShow, useList, useCreate, useDelete } from "@refinedev/core";
-import { useNavigate, useParams } from "react-router";
+import {
+  useShow,
+  useList,
+  useCreate,
+  useDelete,
+  useBack,
+} from "@refinedev/core";
+import { useParams } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -69,7 +75,7 @@ const contentSchema = z.object({
 type ContentFormValues = z.infer<typeof contentSchema>;
 
 const LecturesManageContent = () => {
-  const navigate = useNavigate();
+  const back = useBack();
   const { id: lectureId } = useParams();
   const { confirmDelete } = useDeleteConfirmation();
 
@@ -222,11 +228,7 @@ const LecturesManageContent = () => {
       <Breadcrumb />
 
       <div className="mb-6">
-        <Button
-          variant="outline"
-          onClick={() => navigate(`/lectures/show/${lectureId}`)}
-          className="mb-4"
-        >
+        <Button variant="outline" onClick={back} className="mb-4">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Lecture
         </Button>

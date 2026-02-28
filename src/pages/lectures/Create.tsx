@@ -81,6 +81,10 @@ const LecturesCreate = () => {
         onError: (error) => {
           console.error("Failed to create lecture:", error);
         },
+        onSuccess: (data) => {
+          console.log("Lecture created successfully:", data);
+          navigate(`/lectures?classId=${data.data.classId}`);
+        },
       },
     );
   };
