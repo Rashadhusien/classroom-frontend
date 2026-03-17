@@ -1,6 +1,6 @@
 "use client";
 
-import { CircleHelp } from "lucide-react";
+// import { CircleHelp } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -117,7 +117,7 @@ export const SignInForm = () => {
                   control={form.control}
                   name="rememberMe"
                   render={({ field }) => (
-                    <FormItem className="remember">
+                    <FormItem className="remember flex items-center">
                       <FormControl>
                         <Checkbox
                           id="remember"
@@ -133,10 +133,10 @@ export const SignInForm = () => {
                     </FormItem>
                   )}
                 />
-                <Link to="/forgot-password" className="forgot-link">
+                {/* <Link to="/forgot-password" className="forgot-link">
                   <span>Forgot password</span>
                   <CircleHelp />
-                </Link>
+                </Link> */}
               </div>
 
               <Button
@@ -147,14 +147,14 @@ export const SignInForm = () => {
               >
                 {isLoggingIn ? "Signing in..." : "Sign in"}
               </Button>
-
+              {/* 
               <div className="split">
                 <Separator />
                 <span>or</span>
                 <Separator />
               </div>
 
-              <div className="social">
+           <div className="social">
                 <p>Sign in using</p>
                 <div className="social-grid">
                   <Button
@@ -198,7 +198,7 @@ export const SignInForm = () => {
                     <div>GitHub</div>
                   </Button>
                 </div>
-              </div>
+              </div> */}
             </form>
           </Form>
         </CardContent>
